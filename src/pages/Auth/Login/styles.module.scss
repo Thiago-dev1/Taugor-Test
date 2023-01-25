@@ -1,0 +1,18 @@
+.loginContainer {
+    height: 100vh;
+    display: flex;
+    
+    .formLogin {
+        display: block;
+        width: 40rem;
+        height: 15rem;
+        margin: auto;
+
+        button {
+            width: 50%;
+            height: 4rem;
+            margin-top: 1.2rem;
+            font-size: 1.6rem;
+        }
+    }
+}

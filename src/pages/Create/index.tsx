@@ -7,6 +7,7 @@ import styles from './styles.module.scss'
 import { execGenerate, insertInput } from '../../components/utils/generatePDF'
 import { FormContact } from '../../components/Form/FormContact'
 import { FormEmployee } from '../../components/Form/FormEmployee'
+import { Header } from '../../components/Header'
 
 
 export interface Employee {
@@ -24,12 +25,8 @@ export interface Employee {
     salary: number
 }
 
-interface Props {
-    currentStep: number, 
-    setCurrentStep: React.Dispatch<React.SetStateAction<number>>
-}
 
-function Create({currentStep, setCurrentStep}: Props) {
+function Create() {
 
     const [employee, setEmployee] = useState<Employee>({
         address: '',
@@ -53,6 +50,7 @@ function Create({currentStep, setCurrentStep}: Props) {
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
+    const [currentStep, setCurrentStep] = useState(1)
     
 
     // falta pegar a imagem
@@ -149,7 +147,6 @@ function Create({currentStep, setCurrentStep}: Props) {
         if(currentStep == 2) {
             verifySetp3()
         }
-
     }
 
     function nextSet() {
@@ -164,28 +161,31 @@ function Create({currentStep, setCurrentStep}: Props) {
     }
 
     return (
-        <div className={styles.createContainer}>
-            <div className={styles.details}>
-                <p>Fale-nos um pouco sobre você <EditIcon /> </p>
-                <span>Diga quem você é, como os empregadores podem entrar em contato com você e qual a sua profissão</span>
+        <>
+            <Header currentStep={currentStep} />
+            <div className={styles.createContainer}>
+                <div className={styles.details}>
+                    <p>Fale-nos um pouco sobre você <EditIcon /> </p>
+                    <span>Diga quem você é, como os empregadores podem entrar em contato com você e qual a sua profissão</span>
+                </div>
+                <form onSubmit={handleSubmit}>
+
+                    <FormContact handleChange={handleChange} error={error} onPage={currentStep} />            
+
+                    <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} /> 
+
+                    {/* <button type='submit'>Test</button> */}
+                    {message && (
+                        <p>{message}</p>
+                    )}
+                </form>
+                <div className={styles.actions}>
+                    <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)}>Anterior</button>
+                    <button className={styles.next} onClick={nextSet}>Proximo</button>           
+                </div>
+                {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
             </div>
-            <form onSubmit={handleSubmit}>
-
-                <FormContact handleChange={handleChange} error={error} onPage={currentStep} />            
-
-                <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} /> 
-
-                {/* <button type='submit'>Test</button> */}
-                {message && (
-                    <p>{message}</p>
-                )}
-            </form>
-            <div className={styles.actions}>
-                <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)}>Anterior</button>
-                <button className={styles.next} onClick={nextSet}>Proximo</button>           
-            </div>
-            {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
-        </div>
+        </>
     )
 }
 
