@@ -10,7 +10,7 @@ interface Props {
 
 function FormEmployee({handleChange, error, onPage}: Props) {
     return (
-        <div className={`${onPage == 3 ? styles.onPage : styles.offPage}`}>
+        <div className={`${onPage == 2 ? styles.onPage : styles.offPage}`}>
             <p className={`${styles.formTitle} ${onPage != 3 ? styles.onPage : ''}`}>Informações sobre o funcionário</p>
                 <Input type='text' title='Cargo' example='Chefe' name='office' handleOnChange={handleChange} errorForm={error} />
                 <Input type='date' title='Data de admissão' example='24/01/2023' name='admissionDate' handleOnChange={handleChange} errorForm={error} />

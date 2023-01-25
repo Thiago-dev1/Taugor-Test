@@ -14,7 +14,7 @@ function FormContact({handleChange, error, onPage}: Props) {
     
     const [imgRoudend, setImgRoudend] = useState(false)
     return (
-        <div className={`${onPage == 2 ? styles.onPage : styles.offPage}`}> 
+        <div className={`${onPage == 1 ? styles.onPage : styles.offPage}`}> 
             <p className={styles.formTitle}>Informações de contato do funcionário</p>
                 <div className={styles.content}>
                     <div>

@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import styles from './styles.module.scss'
 import { execGenerate, insertInput } from '../../components/utils/generatePDF'
 import { FormContact } from '../../components/Form/FormContact'
-import { FormEmployee } from '../../components/Form/Form'
+import { FormEmployee } from '../../components/Form/FormEmployee'
 
 
 export interface Employee {
@@ -24,7 +24,12 @@ export interface Employee {
     salary: number
 }
 
-function Create() {
+interface Props {
+    currentStep: number, 
+    setCurrentStep: React.Dispatch<React.SetStateAction<number>>
+}
+
+function Create({currentStep, setCurrentStep}: Props) {
 
     const [employee, setEmployee] = useState<Employee>({
         address: '',
@@ -48,7 +53,7 @@ function Create() {
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
-    const [currentStep, setCurrentStep] = useState(2)
+    
 
     // falta pegar a imagem
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -137,19 +142,18 @@ function Create() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-        if(currentStep == 2) {
+        if(currentStep == 1) {
             verifySetp2()
         } 
         
-        if(currentStep == 3) {
+        if(currentStep == 2) {
             verifySetp3()
         }
 
-        console.log(employee)
     }
 
     function nextSet() {
-        if (currentStep == 2) {
+        if (currentStep == 1) {
             const res =  verifySetp2()
 
             if(res) {
