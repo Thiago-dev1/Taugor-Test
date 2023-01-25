@@ -14,91 +14,44 @@
             color: gray;
         }
     }
+}
 
-    form {
-        margin-top: 2.0rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
+.actions {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.6rem;
 
-        .formTitle {
-            font-weight: bold;
-            font-size: 2.2rem;
-            margin-bottom: 1.2rem;
-        }
+    button {
+        width: 13rem;
+        height: 4rem;
+        border-radius: 1.4rem;
+        font-size: 1.8rem;
+        text-align: center;
+    }
 
-        .content {
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 1.2rem;
-            .imgContainer {
-                display: flex;
-                width: 100%;
-                gap: 1.2rem;
-                input {
-                    display: none;
-                }
+    .back {
+        background-color: transparent;
+        border: none;
+        color: var(--primary-color);
+    }
 
-                .imgTest {
-                    height: 100%;
-                    width: 15rem;
-                    background-color: gainsboro;
-                }
-            }
-        }
+    .back:hover {
+        background-color: var(--primary-color); 
+        color: white;
+    }
+
+    .next {
+       background-color: var(--primary-color); 
+       color: white;
+       border: none;
+       text-transform: uppercase;
+       transition: all 200ms ease-in-out;
+    }
+
+    .next:hover {
+        background-color: transparent;
+        color: var(--primary-color);
     }
 }
-
-.test {
-    position: relative;
-}
-
-input[type=checkbox]{
-    visibility: hidden;
-    
-  }
-  
-  .box {
-    margin-top: 1.2rem;
-    width: 4.5rem;
-    height: 1.5rem;
-    background: gray;
-    position: relative;
-    border-radius: 0.3rem;
-  }
-  
-  .labelCheck {
-      display: block;
-      width: 1.9rem;
-      height: 1.9rem;
-      border-radius: 50%;
-      transition: all .6s ease;
-      cursor: pointer;
-      position: absolute;
-      top: -0.3rem;
-      left: -0.3rem;
-      background: #333333;
-  }
-
-  .labelCheck::before {
-    content: 'Foto redonda';
-    position: absolute;
-    left: 5.3rem;
-    top: 0.1rem;
-    width: 10rem;
-  }
-  
-  input[type=checkbox]:checked + .labelCheck {
-      left: 2.7rem;
-      background: #f7f7f7;
-  }
-
-  .labelCheck.check::before {
-    left: 2.4rem;
-  }
-
-  .contact {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-  }

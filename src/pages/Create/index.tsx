@@ -4,13 +4,12 @@ import { Input } from '../../components/Form/Input'
 import EditIcon from '@mui/icons-material/Edit'
 
 import styles from './styles.module.scss'
+import { execGenerate, insertInput } from '../../components/utils/generatePDF'
+import { FormContact } from '../../components/Form/FormContact'
+import { FormEmployee } from '../../components/Form/Form'
 
-import { Template, generate, BLANK_PDF } from '@pdfme/generator'
-import { Designer } from '@pdfme/ui'
-import { base } from '../../data'
 
-
-interface User {
+export interface Employee {
     address: string,
     birthDate: string,
     email: string,
@@ -18,70 +17,16 @@ interface User {
     job: string,
     lastName: string,
     nationality: string,
-    phone: string
+    phone: string,
+    office: string,
+    admissionDate: string,
+    sector: string,
+    salary: number
 }
 
 function Create() {
-    const template: Template = {
-        basePdf: base,
-        schemas: [{
-            "phone": {
-                "type": "text",
-                "position": {
-                    "x": 41.22,
-                    "y": 114.11
-                },
-                "width": 35,
-                "height": 5.68,
-                "alignment": "left",
-                "fontSize": 10,
-                "characterSpacing": 0,
-                "lineHeight": 1
-            },
-            "email": {
-                "type": "text",
-                "position": {
-                    "x": 36.73,
-                    "y": 108.01
-                },
-                "width": 35,
-                "height": 5.68,
-                "alignment": "left",
-                "fontSize": 10,
-                "characterSpacing": 0,
-                "lineHeight": 1
-            },
-            "job": {
-                "type": "text",
-                "position": {
-                    "x": 25.4,
-                    "y": 75.14
-                },
-                "width": 35,
-                "height": 7,
-                "alignment": "left",
-                "fontSize": 13,
-                "characterSpacing": 0,
-                "lineHeight": 1
-            },
-            "name": {
-                "type": "text",
-                "position": {
-                    "x": 26.72,
-                    "y": 24.34
-                },
-                "width": 35,
-                "height": 7,
-                "alignment": "left",
-                "fontSize": 18,
-                "characterSpacing": 0,
-                "lineHeight": 1,
-                "fontColor": "#7996ec"
-            }
-        }],
-    };
 
-    const [user, setUser] = useState<User>({
+    const [employee, setEmployee] = useState<Employee>({
         address: '',
         birthDate: '',
         email: '',
@@ -89,82 +34,129 @@ function Create() {
         job: '',
         lastName: '',
         nationality: '',
-        phone: ''
+        phone: '',
+        admissionDate: '',
+        office: '',
+        salary: 0,
+        sector: ''
     })
 
-
-    const inputs = [
-        {
-            "phone": user.phone,
-            "email": user.email,
-            "job": user.job,
-            "name": user.firstName + ' ' + user.lastName
-        }]
-
     async function onGeneratePDF() {
-        await generate({ template, inputs }).then((pdf) => {
-
-            const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
-            window.open(URL.createObjectURL(blob));
-
-        });
+        insertInput(employee)
+        await execGenerate()
     }
-
-
-    const [imgRoudend, setImgRoudend] = useState(false)
-
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
+    const [currentStep, setCurrentStep] = useState(2)
 
     // falta pegar a imagem
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setError('')
-        setUser({ ...user, [e.target.name]: e.target.value })
-        console.log(user)
+        setEmployee({ ...employee, [e.target.name]: e.target.value })
+    }
+
+    function verifySetp2() {
+        if (!employee.firstName) {
+            setError('firstName')
+            setMessage('Informe seu primeiro nome')
+            return false
+        }
+
+        if (!employee.lastName) {
+            setError('lastName')
+            setMessage('Informe um sobrenome')
+            return false
+        }
+
+        if (!employee.address) {
+            setError('address')
+            setMessage('Informe o endereço')
+            return false
+        }
+
+        if (!employee.birthDate) {
+            setError('birthDate')
+            setMessage('Informe sua data de nascimento')
+            return false
+        }
+
+        if (!employee.email) {
+            setError('email')
+            setMessage('Informe seu email')
+            return false
+        }
+
+        if (!employee.job) {
+            setError('job')
+            setMessage('Informe seu emprego')
+            return false
+        }
+
+        if (!employee.nationality) {
+            setError('nationality')
+            setMessage('Informe sua nacionalidade')
+            return false
+        }
+
+        if (!employee.phone) {
+            setError('phone')
+            setMessage('Informe seu telefone')
+            return false
+        }
+
+        setMessage('')
+        return true
+    }
+
+    function verifySetp3() {
+        if (!employee.admissionDate) {
+            setError('admissionDate')
+            setMessage('Informe a data de admissão')
+        }
+
+        if (!employee.office) {
+            setError('office')
+            setMessage('Informe o cargo')
+        }
+
+        if (!employee.salary) {
+            setError('salary')
+            setMessage('Informe o salario')
+        }
+
+        if (!employee.sector) {
+            setError('sector')
+            setMessage('Informe o setor')
+        }
+
+        setMessage('')
+        return true
     }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        if (!user.firstName) {
-            setError('firstName')
-            setMessage('Informe seu primeiro nome')
+
+        if(currentStep == 2) {
+            verifySetp2()
+        } 
+        
+        if(currentStep == 3) {
+            verifySetp3()
         }
 
-        if (!user.lastName) {
-            setError('lastName')
-            setMessage('Informe um sobrenome')
-        }
+        console.log(employee)
+    }
 
-        if (!user.address) {
-            setError('address')
-            setMessage('Informe o endereço')
-        }
+    function nextSet() {
+        if (currentStep == 2) {
+            const res =  verifySetp2()
 
-        if (!user.birthDate) {
-            setError('birthDate')
-            setMessage('Informe sua data de nascimento')
+            if(res) {
+                setCurrentStep(currentStep + 1)
+            }
         }
-
-        if (!user.email) {
-            setError('email')
-            setMessage('Informe seu email')
-        }
-
-        if (!user.job) {
-            setError('job')
-            setMessage('Informe seu emprego')
-        }
-
-        if (!user.nationality) {
-            setError('nationality')
-            setMessage('Informe sua nacionalidade')
-        }
-
-        if (!user.phone) {
-            setError('phone')
-            setMessage('Informe seu telefone')
-        }
+        
     }
 
     return (
@@ -174,43 +166,21 @@ function Create() {
                 <span>Diga quem você é, como os empregadores podem entrar em contato com você e qual a sua profissão</span>
             </div>
             <form onSubmit={handleSubmit}>
-                <p className={styles.formTitle}>Informações de contato</p>
-                <div className={styles.content}>
-                    <div>
-                        <Input type='text' title='Nome' example='Tiago' name='firstName' handleOnChange={handleChange} errorForm={error} />
-                        <Input type='text' title='Sobrenome' example='Souza' name='lastName' handleOnChange={handleChange} errorForm={error} />
-                    </div>
-                    <div className={styles.imgContainer}>
-                        <div className={styles.imgTest}></div>
-                        <div className={styles.test}>
-                            {/* <Input type='file' title='Foto Do perfil' example='' /> */}
-                            <div className={styles.box}>
-                                <input id="checkbox" type="checkbox" onChange={() => setImgRoudend(!imgRoudend)} checked={imgRoudend} />
-                                <label htmlFor="checkbox" className={`${styles.labelCheck} ${imgRoudend ? styles.check : ''}`}></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <Input type='text' title='Emprego' example='Vendedor' name='job' handleOnChange={handleChange} errorForm={error} />
-                <Input type='text' title='Endereço' example='Avenida Paulista, 1.234' name='address' handleOnChange={handleChange} errorForm={error} />
 
-                <div className={styles.contact}>
-                    <div>
-                        <Input type='number' title='Telefone' example='(11) 9 9999-9999' name='phone' handleOnChange={handleChange} errorForm={error} />
-                        <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' handleOnChange={handleChange} errorForm={error} />
-                    </div>
-                    <div>
-                        <Input type='text' title='Nacionalidade' example='Brasileira' name='nationality' handleOnChange={handleChange} errorForm={error} />
-                        <Input type='date' title='Data de nascimento' example='23 jun 1985' name='birthDate' handleOnChange={handleChange} errorForm={error} />
-                    </div>
-                </div>
-                <button type='submit'>Test</button>
+                <FormContact handleChange={handleChange} error={error} onPage={currentStep} />            
+
+                <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} /> 
+
+                {/* <button type='submit'>Test</button> */}
                 {message && (
                     <p>{message}</p>
                 )}
             </form>
-            <div>asa</div>
-            <button type='button' onClick={onGeneratePDF}>test</button>
+            <div className={styles.actions}>
+                <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)}>Anterior</button>
+                <button className={styles.next} onClick={nextSet}>Proximo</button>           
+            </div>
+            {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
         </div>
     )
 }

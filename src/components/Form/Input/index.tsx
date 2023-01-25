@@ -30,14 +30,13 @@ function Input({ example, title, type, name, handleOnChange, errorForm }: Props)
 
 
             {type != 'file' &&
-                <>
+                <div>
                     <div className={`${styles.inputContainer} ${errorForm == name ? styles.error : ''}`}>
                         <p className={`${value ? styles.value : ''}`}>{title}</p>
                         <input type={type} placeholder={title} name={name} onChange={(e) => [handleOnChange(e), e.target.value ? setValue(true) : setValue(false)]} />
                     </div>
                     <span className={styles.example}>ex: {example}</span>
-
-                </>
+                </div>
             }
 
         </>
