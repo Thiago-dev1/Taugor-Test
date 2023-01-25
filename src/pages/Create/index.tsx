@@ -1,4 +1,4 @@
-import { useState }from 'react'
+import { useState } from 'react'
 
 import { Input } from '../../components/Form/Input'
 import EditIcon from '@mui/icons-material/Edit'
@@ -26,62 +26,62 @@ function Create() {
         basePdf: base,
         schemas: [{
             "phone": {
-              "type": "text",
-              "position": {
-                "x": 41.22,
-                "y": 114.11
-              },
-              "width": 35,
-              "height": 5.68,
-              "alignment": "left",
-              "fontSize": 10,
-              "characterSpacing": 0,
-              "lineHeight": 1
+                "type": "text",
+                "position": {
+                    "x": 41.22,
+                    "y": 114.11
+                },
+                "width": 35,
+                "height": 5.68,
+                "alignment": "left",
+                "fontSize": 10,
+                "characterSpacing": 0,
+                "lineHeight": 1
             },
             "email": {
-              "type": "text",
-              "position": {
-                "x": 36.73,
-                "y": 108.01
-              },
-              "width": 35,
-              "height": 5.68,
-              "alignment": "left",
-              "fontSize": 10,
-              "characterSpacing": 0,
-              "lineHeight": 1
+                "type": "text",
+                "position": {
+                    "x": 36.73,
+                    "y": 108.01
+                },
+                "width": 35,
+                "height": 5.68,
+                "alignment": "left",
+                "fontSize": 10,
+                "characterSpacing": 0,
+                "lineHeight": 1
             },
             "job": {
-              "type": "text",
-              "position": {
-                "x": 25.4,
-                "y": 75.14
-              },
-              "width": 35,
-              "height": 7,
-              "alignment": "left",
-              "fontSize": 13,
-              "characterSpacing": 0,
-              "lineHeight": 1
+                "type": "text",
+                "position": {
+                    "x": 25.4,
+                    "y": 75.14
+                },
+                "width": 35,
+                "height": 7,
+                "alignment": "left",
+                "fontSize": 13,
+                "characterSpacing": 0,
+                "lineHeight": 1
             },
             "name": {
-              "type": "text",
-              "position": {
-                "x": 26.72,
-                "y": 24.34
-              },
-              "width": 35,
-              "height": 7,
-              "alignment": "left",
-              "fontSize": 18,
-              "characterSpacing": 0,
-              "lineHeight": 1,
-              "fontColor": "#7996ec"
+                "type": "text",
+                "position": {
+                    "x": 26.72,
+                    "y": 24.34
+                },
+                "width": 35,
+                "height": 7,
+                "alignment": "left",
+                "fontSize": 18,
+                "characterSpacing": 0,
+                "lineHeight": 1,
+                "fontColor": "#7996ec"
             }
-          }],
-      };
+        }],
+    };
 
-      const [user, setUser] = useState<User>({
+    const [user, setUser] = useState<User>({
         address: '',
         birthDate: '',
         email: '',
@@ -91,31 +91,27 @@ function Create() {
         nationality: '',
         phone: ''
     })
-    
 
-      const inputs = [
+
+    const inputs = [
         {
-          "phone": user.phone,
-          "email": user.email,
-          "job": user.job,
-          "name": user.firstName + ' ' + user.lastName
+            "phone": user.phone,
+            "email": user.email,
+            "job": user.job,
+            "name": user.firstName + ' ' + user.lastName
         }]
 
     async function onGeneratePDF() {
         await generate({ template, inputs }).then((pdf) => {
-            console.log(pdf);
-          
-            // Browser
+
             const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
             window.open(URL.createObjectURL(blob));
-          
-            // Node.js
-            // fs.writeFileSync(path.join(__dirname, `test.pdf`), pdf);
-          });
+
+        });
     }
 
 
-    const [imgRoudend, setImgRoudend ] = useState(false)
+    const [imgRoudend, setImgRoudend] = useState(false)
 
 
     const [error, setError] = useState('')
@@ -124,48 +120,48 @@ function Create() {
     // falta pegar a imagem
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setError('')
-        setUser({...user, [e.target.name]: e.target.value})
+        setUser({ ...user, [e.target.name]: e.target.value })
         console.log(user)
     }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        if(!user.firstName) {
+        if (!user.firstName) {
             setError('firstName')
             setMessage('Informe seu primeiro nome')
         }
 
-        if(!user.lastName) {
+        if (!user.lastName) {
             setError('lastName')
             setMessage('Informe um sobrenome')
         }
 
-        if(!user.address) {
+        if (!user.address) {
             setError('address')
             setMessage('Informe o endereço')
         }
 
-        if(!user.birthDate) {
+        if (!user.birthDate) {
             setError('birthDate')
             setMessage('Informe sua data de nascimento')
         }
 
-        if(!user.email) {
+        if (!user.email) {
             setError('email')
             setMessage('Informe seu email')
         }
 
-        if(!user.job) {
+        if (!user.job) {
             setError('job')
             setMessage('Informe seu emprego')
         }
 
-        if(!user.nationality) {
+        if (!user.nationality) {
             setError('nationality')
             setMessage('Informe sua nacionalidade')
         }
 
-        if(!user.phone) {
+        if (!user.phone) {
             setError('phone')
             setMessage('Informe seu telefone')
         }
@@ -189,7 +185,7 @@ function Create() {
                         <div className={styles.test}>
                             {/* <Input type='file' title='Foto Do perfil' example='' /> */}
                             <div className={styles.box}>
-                                <input id="checkbox" type="checkbox" onChange={() => setImgRoudend(!imgRoudend)} checked={imgRoudend}/>
+                                <input id="checkbox" type="checkbox" onChange={() => setImgRoudend(!imgRoudend)} checked={imgRoudend} />
                                 <label htmlFor="checkbox" className={`${styles.labelCheck} ${imgRoudend ? styles.check : ''}`}></label>
                             </div>
                         </div>
