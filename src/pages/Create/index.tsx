@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { Input } from '../../components/Form/Input'
 import EditIcon from '@mui/icons-material/Edit'
@@ -8,6 +8,7 @@ import { execGenerate, insertInput } from '../../components/utils/generatePDF'
 import { FormContact } from '../../components/Form/FormContact'
 import { FormEmployee } from '../../components/Form/FormEmployee'
 import { Header } from '../../components/Header'
+import { api } from '../../services/api'
 
 
 export interface Employee {
@@ -116,21 +117,25 @@ function Create() {
         if (!employee.admissionDate) {
             setError('admissionDate')
             setMessage('Informe a data de admissão')
+            return false                                                                        
         }
 
         if (!employee.office) {
             setError('office')
             setMessage('Informe o cargo')
+            return false
         }
 
         if (!employee.salary) {
             setError('salary')
             setMessage('Informe o salario')
+            return false
         }
 
         if (!employee.sector) {
             setError('sector')
             setMessage('Informe o setor')
+            return false
         }
 
         setMessage('')
@@ -140,13 +145,15 @@ function Create() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-        if(currentStep == 1) {
+        if(currentStep == 1 || currentStep == 2) {
             verifySetp2()
         } 
         
-        if(currentStep == 2) {
+        if(currentStep == 1 || currentStep == 2) {
             verifySetp3()
         }
+
+        api.post('/employees', employee)
     }
 
     function nextSet() {
@@ -174,14 +181,14 @@ function Create() {
 
                     <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} /> 
 
-                    {/* <button type='submit'>Test</button> */}
+                    <button type='submit'>Test</button>
                     {message && (
                         <p>{message}</p>
                     )}
                 </form>
                 <div className={styles.actions}>
-                    <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)}>Anterior</button>
-                    <button className={styles.next} onClick={nextSet}>Proximo</button>           
+                    <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep == 1 ? true : false}>Anterior</button>
+                    <button className={styles.next} onClick={nextSet} disabled={currentStep == 2 ? true : false}>Proximo</button>           
                 </div>
                 {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
             </div>

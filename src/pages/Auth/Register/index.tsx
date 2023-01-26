@@ -1,29 +1,29 @@
 
-import { useState, useContext, useEffect } from 'react'
-import { Input } from '../../../components/Form/Input'
 import Button from '@mui/material/Button'
-
-
-import { api } from '../../../services/api'
-import { useAuthentication } from '../../../hooks/useAuthentication'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Input } from '../../../components/Form/Input'
+import { useAuthentication } from '../../../hooks/useAuthentication'
 
 import styles from './styles.module.scss'
 
-interface UserProps {
+interface RegisterUserProps {
+    name: string,
     email: string,
     password: string
 }
 
-function Login() {
-    const [user, setUser] = useState<UserProps>({
+function Register() {
+
+    const [user, setUser] = useState<RegisterUserProps>({
+        name: '',
         email: '',
         password: ''
     })
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState<string | true>('')
-    const { login, error: authError, loading } = useAuthentication()
+    const { createUser ,error: authError, loading } = useAuthentication()
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setError('')
@@ -32,6 +32,12 @@ function Login() {
     }
 
     function verifySetp() {
+        if (!user.name) {
+            setError('name')
+            setMessage('Informe seu nome')
+            return false
+        }
+
         if (!user.email) {
             setError('email')
             setMessage('Informe seu email')
@@ -49,8 +55,6 @@ function Login() {
         return true
     }
 
-
-
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
@@ -59,36 +63,28 @@ function Login() {
         if (!verify) {
             return
         }
-
         setError("");
-
-        const res = await login(user);
+        const res = await createUser(user);
     }
-    
+
     useEffect(() => {
         console.log(authError);
         if (authError) {
             setMessage(authError);
         }
       }, [authError]);
-
-    //   useEffect(() => {
-    //     api.get('http://localhost:3333/test').then((response) => {
-    //         setTest(response.data)
-    //         console.log(test)
-    //     })
-    //   }, [])
-
+    
     return (
-        <div className={styles.loginContainer}>
-            <form className={styles.formLogin} onSubmit={handleSubmit} >
+        <div className={styles.registerContainer}>
+            <form className={styles.formRegister} onSubmit={handleSubmit} >
+                <Input type='text' title='Nome' example='tiago' name='name' handleOnChange={handleChange} errorForm={error} />
                 <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' handleOnChange={handleChange} errorForm={error} />
                 <Input type='password' title='Senha' example='******' name='password' handleOnChange={handleChange} errorForm={error} />
                 <div className={styles.actions}>
                     <Button variant="contained" size='large' type='submit'>
-                        Entrar
+                        Cadastrar
                     </Button>
-                    <Link to='/cadastrar'>Cadastrar</Link>
+                    <Link to='/entrar'>Entrar</Link>
                 </div>
                 {message && <p>{message}</p>}
             </form>
@@ -96,4 +92,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Register

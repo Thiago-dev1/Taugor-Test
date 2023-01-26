@@ -3,14 +3,16 @@ import SvgIcon from '@mui/material/SvgIcon'
 import HomeIcon from '@mui/icons-material/Home'
 
 import styles from './styles.module.scss'
-import { AuthContext } from '../../contexts/AuthContext'
+import { useAuthentication } from '../../hooks/useAuthentication'
+
 
 interface Props {
-    currentStep: number
+    currentStep?: number
 }
 
-function Header({currentStep}: Props) {
-    const { logout } = useContext(AuthContext)
+function Header({ currentStep }: Props) {
+    // const { logout } = useContext(AuthContext)
+    const { logout } = useAuthentication()
 
     return (
         <header className={styles.headerContainer}>
@@ -19,11 +21,20 @@ function Header({currentStep}: Props) {
                     <img src="http://www.taugor.com.br/wp-content/uploads/2018/11/marca-taugor.png" alt="taugor Logo" />
                 </h1>
                 <div className={styles.pass}>
-                    <p>Passo {currentStep} de 2</p>
-                    <p className={styles.titlePass}>Informações para cadastrar</p>
+
+                    {currentStep != undefined && (
+                        <p>Passo {currentStep} de 2</p>
+                    )}
+                    {currentStep != undefined 
+                        ?
+                            <p className={styles.titlePass}>Informações para cadastrar</p>
+                        :
+                            <p className={styles.titlePass}>Sistema teste</p>
+                    }
+                    
                 </div>
             </div>
-            <nav> 
+            <nav>
                 <svg onClick={logout}><HomeIcon /></svg>
             </nav>
         </header>

@@ -7,10 +7,7 @@ import App from './App'
 import { AuthProvaider } from './contexts/AuthContext'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <AuthProvaider>
+ <React.StrictMode>
       <App />
-    </AuthProvaider>
-    
   </React.StrictMode>,
 )

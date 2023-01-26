@@ -1,0 +1,80 @@
+.HomeContainer {
+    
+    max-width: 140rem;
+    min-height: 60vh;
+    margin: 0 auto;
+    padding: 0 2.2rem;
+
+    .box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h2 {
+            font-size: 3.2rem;
+        }
+
+        a {
+            width: 13rem;
+            height: 4rem;
+            border-radius: 1.2rem;
+            font-size: 1.8rem;
+            background-color: var(--primary-color); 
+            color: white;
+            border: none;
+            text-transform: uppercase;
+            transition: all 200ms ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        a:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+    }
+
+    .employeeCard {
+        margin-top: 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 0.2rem solid gray;
+        padding-bottom: 1.2rem;
+
+        div p {
+            font-size: 2.2rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1.2rem;
+
+            button, a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: transparent;
+                color: var(--primary-color);
+                width: 9.4rem;
+                height: 3rem;
+                border: 0.2rem solid var(--primary-color);
+                border-radius: 0.4rem;
+                font-size: 1.6rem;
+                transition: all 200ms ease-in-out;
+            }
+
+            button:hover {
+                background-color: red;
+                border-color: red;
+                color: white;
+            }
+            
+            a:hover {
+                background-color: var(--primary-color);
+                color: white;
+            }
+        }
+    }
+}
