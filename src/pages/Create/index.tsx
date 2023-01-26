@@ -4,11 +4,14 @@ import { Input } from '../../components/Form/Input'
 import EditIcon from '@mui/icons-material/Edit'
 
 import styles from './styles.module.scss'
-import { execGenerate, insertInput } from '../../components/utils/generatePDF'
+import { execGenerate } from '../../utils/generatePDF'
 import { FormContact } from '../../components/Form/FormContact'
 import { FormEmployee } from '../../components/Form/FormEmployee'
 import { Header } from '../../components/Header'
 import { api } from '../../services/api'
+import { viewTest } from '../../utils/viewPDF'
+
+
 
 
 export interface Employee {
@@ -43,16 +46,17 @@ function Create() {
         salary: 0,
         sector: ''
     })
+    let domContainer = document.getElementById('container') as  HTMLElement
+
 
     async function onGeneratePDF() {
-        insertInput(employee)
-        await execGenerate()
+        await execGenerate(employee)
     }
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
     const [currentStep, setCurrentStep] = useState(1)
-    
+
 
     // falta pegar a imagem
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -117,7 +121,7 @@ function Create() {
         if (!employee.admissionDate) {
             setError('admissionDate')
             setMessage('Informe a data de admissão')
-            return false                                                                        
+            return false
         }
 
         if (!employee.office) {
@@ -145,11 +149,11 @@ function Create() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-        if(currentStep == 1 || currentStep == 2) {
+        if (currentStep == 1 || currentStep == 2) {
             verifySetp2()
-        } 
-        
-        if(currentStep == 1 || currentStep == 2) {
+        }
+
+        if (currentStep == 1 || currentStep == 2) {
             verifySetp3()
         }
 
@@ -158,39 +162,53 @@ function Create() {
 
     function nextSet() {
         if (currentStep == 1) {
-            const res =  verifySetp2()
+            const res = verifySetp2()
 
-            if(res) {
+            if (res) {
                 setCurrentStep(currentStep + 1)
             }
         }
-        
+
     }
+
+    useEffect(() => {
+        if(domContainer == null) {
+            domContainer = document.getElementById('container') as  HTMLElement
+            viewTest(domContainer, employee)
+        }else {
+            viewTest(domContainer, employee)
+        }  
+    }, [employee])
 
     return (
         <>
             <Header currentStep={currentStep} />
-            <div className={styles.createContainer}>
-                <div className={styles.details}>
-                    <p>Fale-nos um pouco sobre você <EditIcon /> </p>
-                    <span>Diga quem você é, como os empregadores podem entrar em contato com você e qual a sua profissão</span>
+            <div className={styles.container}>
+                <div className={styles.createContainer}>
+                    <div className={styles.details}>
+                        <p>Fale-nos um pouco sobre você <EditIcon /> </p>
+                        <span>Diga quem você é, como os empregadores podem entrar em contato com você e qual a sua profissão</span>
+                    </div>
+                    <form onSubmit={handleSubmit}>
+
+                        <FormContact handleChange={handleChange} error={error} onPage={currentStep} />
+
+                        <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} />
+
+                        <button type='submit'>Test</button>
+                        {message && (
+                            <p>{message}</p>
+                        )}
+                    </form>
+                    <div className={styles.actions}>
+                        <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep == 1 ? true : false}>Anterior</button>
+                        <button className={styles.next} onClick={nextSet} disabled={currentStep == 2 ? true : false}>Proximo</button>
+                    </div>
+                    <button type='button' onClick={onGeneratePDF}>test</button>
                 </div>
-                <form onSubmit={handleSubmit}>
-
-                    <FormContact handleChange={handleChange} error={error} onPage={currentStep} />            
-
-                    <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} /> 
-
-                    <button type='submit'>Test</button>
-                    {message && (
-                        <p>{message}</p>
-                    )}
-                </form>
-                <div className={styles.actions}>
-                    <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep == 1 ? true : false}>Anterior</button>
-                    <button className={styles.next} onClick={nextSet} disabled={currentStep == 2 ? true : false}>Proximo</button>           
+                <div id='container' className={styles.PDF}>
+                    
                 </div>
-                {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
             </div>
         </>
     )

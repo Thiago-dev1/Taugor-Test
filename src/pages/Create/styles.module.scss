@@ -1,3 +1,11 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .PDF {
+        background-color: red;
+    }
+}
+
 .createContainer {
     max-width: 70rem;
     margin-left: 20rem;
