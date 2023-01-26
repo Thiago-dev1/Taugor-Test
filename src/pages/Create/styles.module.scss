@@ -50,7 +50,7 @@
         color: white;
     }
 
-    .next {
+    .next, .buttonRegister {
        background-color: var(--primary-color); 
        color: white;
        border: none;
@@ -58,8 +58,20 @@
        transition: all 200ms ease-in-out;
     }
 
-    .next:hover {
+    .next:hover, .buttonRegister:hover {
         background-color: transparent;
         color: var(--primary-color);
+    }
+
+    .next.nextNone {
+        display: none;
+    }
+
+    .buttonRegister {
+        display: none;
+    }
+
+    .buttonRegister.nextOn {
+        display: block;
     }
 }

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 
 import { Input } from '../../components/Form/Input'
@@ -31,6 +32,7 @@ export interface Employee {
 
 
 function Create() {
+    const navigate = useNavigate()
 
     const [employee, setEmployee] = useState<Employee>({
         address: '',
@@ -46,7 +48,7 @@ function Create() {
         salary: 0,
         sector: ''
     })
-    let domContainer = document.getElementById('container') as  HTMLElement
+    let domContainer = document.getElementById('container') as HTMLElement
 
 
     async function onGeneratePDF() {
@@ -149,15 +151,20 @@ function Create() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-        if (currentStep == 1 || currentStep == 2) {
-            verifySetp2()
-        }
+        let res = false
 
-        if (currentStep == 1 || currentStep == 2) {
-            verifySetp3()
-        }
+        res =  verifySetp2()
 
-        api.post('/employees', employee)
+
+
+        res = verifySetp3()
+
+        if(res) {
+            console.log(message)
+            api.post('/employees', employee).then((response) => {
+                navigate('/')
+            })
+        }
     }
 
     function nextSet() {
@@ -172,12 +179,12 @@ function Create() {
     }
 
     useEffect(() => {
-        if(domContainer == null) {
-            domContainer = document.getElementById('container') as  HTMLElement
+        if (domContainer == null) {
+            domContainer = document.getElementById('container') as HTMLElement
             viewTest(domContainer, employee)
-        }else {
+        } else {
             viewTest(domContainer, employee)
-        }  
+        }
     }, [employee])
 
     return (
@@ -194,20 +201,39 @@ function Create() {
                         <FormContact handleChange={handleChange} error={error} onPage={currentStep} />
 
                         <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} />
+                        <div className={styles.actions}>
+                            <button
+                                className={styles.back}
+                                type='button'
+                                onClick={() => setCurrentStep(currentStep - 1)}
+                                disabled={currentStep == 1 ? true : false}
+                            >
+                                Anterior
+                            </button>
 
-                        <button type='submit'>Test</button>
+                            <button
+                                className={`${styles.next} ${currentStep == 2 ? styles.nextNone : ''}`}
+                                type='button'
+                                onClick={nextSet}
+                            >
+                                Proximo
+                            </button>
+
+                            <button
+                                className={`${styles.buttonRegister} ${currentStep == 2 ? styles.nextOn : ''}`}
+                                type='submit'
+                            >
+                                Cadastrar
+                            </button>
+                        </div>
                         {message && (
                             <p>{message}</p>
                         )}
                     </form>
-                    <div className={styles.actions}>
-                        <button className={styles.back} onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep == 1 ? true : false}>Anterior</button>
-                        <button className={styles.next} onClick={nextSet} disabled={currentStep == 2 ? true : false}>Proximo</button>
-                    </div>
                     <button type='button' onClick={onGeneratePDF}>test</button>
                 </div>
                 <div id='container' className={styles.PDF}>
-                    
+
                 </div>
             </div>
         </>
