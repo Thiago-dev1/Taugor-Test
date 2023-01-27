@@ -17,8 +17,6 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, Props> = (props, ref
     
     const [wasChanged, setWasChanged] = useState(false || props.value ? true : false)
 
-    console.log(props.className)
-
     return (
         <>
             {props.type == 'file' &&

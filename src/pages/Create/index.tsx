@@ -12,11 +12,13 @@ import { Header } from '../../components/Header'
 import { api } from '../../services/api'
 import { viewTest } from '../../utils/viewPDF'
 import { Employee } from '../../types/Employee'
+import { useInsertDocument } from '../../hooks/useInsertDocument'
 
 
 
 function Create() {
     const navigate = useNavigate()
+    const {insertDocument, errorFirebase, loading} = useInsertDocument('employees')
 
     const [employee, setEmployee] = useState<Employee>({
         address: '',
@@ -31,6 +33,7 @@ function Create() {
         sector: 'RH', 
         gender: 'M'
     })
+
     let domContainer = document.getElementById('container') as HTMLElement
 
 
@@ -133,15 +136,21 @@ function Create() {
 
         res =  verifySetp2()
 
-
-
         res = verifySetp3()
 
         if(res) {
-            console.log(message)
-            api.post('/employees', employee).then((response) => {
-                navigate('/')
-            })
+            // console.log(message)
+            // api.post('/employees', employee).then((response) => {
+            //     navigate('/')
+            // })
+
+           const response = await insertDocument(employee)
+           console.log(response)
+           if (response == 'Cadastrado com sucesso') {
+            navigate('/')
+           } else {
+            setError(response)
+           }
         }
     }
 
