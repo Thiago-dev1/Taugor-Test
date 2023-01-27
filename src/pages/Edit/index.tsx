@@ -209,7 +209,7 @@ function Edit() {
 
                                 <FormContact handleChange={handleChange} handleChangeSelect={handleChangeSelect} error={error} onPage={currentStep} employee={employee} />
 
-                                <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} employee={employee} />
+                                <FormEmployee handleChange={handleChange} handleChangeSelect={handleChangeSelect} error={error} onPage={currentStep} employee={employee} />
                                 <div className={styles.actions}>
                                     <button
                                         className={styles.back}

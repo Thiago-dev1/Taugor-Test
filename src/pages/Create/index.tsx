@@ -34,9 +34,9 @@ function Create() {
     let domContainer = document.getElementById('container') as HTMLElement
 
 
-    // async function onGeneratePDF() {
-    //     await execGenerate(employee)
-    // }
+    async function onGeneratePDF() {
+        await execGenerate(employee)
+    }
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
@@ -156,14 +156,14 @@ function Create() {
 
     }
 
-    // useEffect(() => {
-    //     if (domContainer == null) {
-    //         domContainer = document.getElementById('container') as HTMLElement
-    //         viewTest(domContainer, employee)
-    //     } else {
-    //         viewTest(domContainer, employee)
-    //     }
-    // }, [employee])
+    useEffect(() => {
+        if (domContainer == null) {
+            domContainer = document.getElementById('container') as HTMLElement
+            viewTest(domContainer, employee)
+        } else {
+            viewTest(domContainer, employee)
+        }
+    }, [employee])
 
     return (
         <>
@@ -210,7 +210,7 @@ function Create() {
                     </form>
                     {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
                 </div>
-
+                <div id='container'></div>
             </div>
         </>
     )
