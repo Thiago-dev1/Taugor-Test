@@ -11,24 +11,8 @@ import { FormEmployee } from '../../components/Form/FormEmployee'
 import { Header } from '../../components/Header'
 import { api } from '../../services/api'
 import { viewTest } from '../../utils/viewPDF'
+import { Employee } from '../../types/Employee'
 
-
-
-
-export interface Employee {
-    address: string,
-    birthDate: string,
-    email: string,
-    firstName: string,
-    job: string,
-    lastName: string,
-    nationality: string,
-    phone: string,
-    office: string,
-    admissionDate: string,
-    sector: string,
-    salary: number
-}
 
 
 function Create() {
@@ -39,21 +23,20 @@ function Create() {
         birthDate: '',
         email: '',
         firstName: '',
-        job: '',
         lastName: '',
-        nationality: '',
         phone: '',
         admissionDate: '',
-        office: '',
+        office: 'Auxiliar',
         salary: 0,
-        sector: ''
+        sector: 'RH', 
+        gender: 'M'
     })
     let domContainer = document.getElementById('container') as HTMLElement
 
 
-    async function onGeneratePDF() {
-        await execGenerate(employee)
-    }
+    // async function onGeneratePDF() {
+    //     await execGenerate(employee)
+    // }
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
@@ -64,12 +47,19 @@ function Create() {
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setError('')
         setEmployee({ ...employee, [e.target.name]: e.target.value })
+        console.log(employee)
+    }
+
+    function handleChangeSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+        
+        setEmployee({ ...employee, [e.target.name]: e.target.value })
     }
 
     function verifySetp2() {
         if (!employee.firstName) {
             setError('firstName')
             setMessage('Informe seu primeiro nome')
+            console.log(employee)
             return false
         }
 
@@ -94,18 +84,6 @@ function Create() {
         if (!employee.email) {
             setError('email')
             setMessage('Informe seu email')
-            return false
-        }
-
-        if (!employee.job) {
-            setError('job')
-            setMessage('Informe seu emprego')
-            return false
-        }
-
-        if (!employee.nationality) {
-            setError('nationality')
-            setMessage('Informe sua nacionalidade')
             return false
         }
 
@@ -178,14 +156,14 @@ function Create() {
 
     }
 
-    useEffect(() => {
-        if (domContainer == null) {
-            domContainer = document.getElementById('container') as HTMLElement
-            viewTest(domContainer, employee)
-        } else {
-            viewTest(domContainer, employee)
-        }
-    }, [employee])
+    // useEffect(() => {
+    //     if (domContainer == null) {
+    //         domContainer = document.getElementById('container') as HTMLElement
+    //         viewTest(domContainer, employee)
+    //     } else {
+    //         viewTest(domContainer, employee)
+    //     }
+    // }, [employee])
 
     return (
         <>
@@ -198,9 +176,9 @@ function Create() {
                     </div>
                     <form onSubmit={handleSubmit}>
 
-                        <FormContact handleChange={handleChange} error={error} onPage={currentStep} />
+                        <FormContact handleChange={handleChange} handleChangeSelect={handleChangeSelect} error={error} onPage={currentStep} employee={employee} page='create' />
 
-                        <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} />
+                        <FormEmployee handleChange={handleChange} handleChangeSelect={handleChangeSelect} error={error} onPage={currentStep} employee={employee} page='create' />
                         <div className={styles.actions}>
                             <button
                                 className={styles.back}
@@ -230,11 +208,9 @@ function Create() {
                             <p>{message}</p>
                         )}
                     </form>
-                    <button type='button' onClick={onGeneratePDF}>test</button>
+                    {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
                 </div>
-                <div id='container' className={styles.PDF}>
 
-                </div>
             </div>
         </>
     )

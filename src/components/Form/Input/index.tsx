@@ -8,13 +8,16 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     title: string,
     example: string,
     name: string,
-    handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    errorForm?: string,
+    // handle: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    error_form?: string,
+    test?: any
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, Props> = (props, ref) => {
     
     const [wasChanged, setWasChanged] = useState(false || props.value ? true : false)
+
+    console.log(props.className)
 
     return (
         <>
@@ -31,9 +34,9 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, Props> = (props, ref
 
             {props.type != 'file' &&
                 <div>
-                    <div className={`${styles.inputContainer} ${props.errorForm == props.name ? styles.error : ''}`}>
-                        <p className={`${wasChanged ? styles.value : ''}`}>{props.title}</p>
-                        <input {...props}  onChange={(e) => [props.handleOnChange(e), e.target.value ? setWasChanged(true) : setWasChanged(false)]} />
+                    <div className={`${styles.inputContainer} ${props.error_form == props.name ? styles.error : ''}`}>
+                        <p className={`${props.className == props.name ? styles.value : ''}`}>{props.title}</p>
+                        <input {...props} />
                     </div>
                     <span className={styles.example}>ex: {props.example}</span>
                 </div>

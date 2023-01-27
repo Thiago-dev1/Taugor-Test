@@ -12,24 +12,8 @@ import { Header } from '../../components/Header'
 import { api } from '../../services/api'
 import { viewTest } from '../../utils/viewPDF'
 import { AxiosError } from 'axios'
+import { Employee } from '../../types/Employee'
 
-
-
-
-export interface Employee {
-    address: string,
-    birthDate: string,
-    email: string,
-    firstName: string,
-    job: string,
-    lastName: string,
-    nationality: string,
-    phone: string,
-    office: string,
-    admissionDate: string,
-    sector: string,
-    salary: number
-}
 
 
 function Edit() {
@@ -41,14 +25,13 @@ function Edit() {
         birthDate: '',
         email: '',
         firstName: '',
-        job: '',
         lastName: '',
-        nationality: '',
         phone: '',
         admissionDate: '',
         office: '',
         salary: 0,
-        sector: ''
+        sector: '',
+        gender: ''
     })
     let domContainer = document.getElementById('container') as HTMLElement
 
@@ -65,6 +48,12 @@ function Edit() {
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setError('')
         setEmployee({ ...employee, [e.target.name]: e.target.value })
+    }
+
+    function handleChangeSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+        
+        setEmployee({ ...employee, [e.target.name]: e.target.value })
+        console.log(employee)
     }
 
     function verifySetp2() {
@@ -95,18 +84,6 @@ function Edit() {
         if (!employee.email) {
             setError('email')
             setMessage('Informe seu email')
-            return false
-        }
-
-        if (!employee.job) {
-            setError('job')
-            setMessage('Informe seu emprego')
-            return false
-        }
-
-        if (!employee.nationality) {
-            setError('nationality')
-            setMessage('Informe sua nacionalidade')
             return false
         }
 
@@ -230,7 +207,7 @@ function Edit() {
                             </div>
                             <form onSubmit={handleSubmit}>
 
-                                <FormContact handleChange={handleChange} error={error} onPage={currentStep} employee={employee} />
+                                <FormContact handleChange={handleChange} handleChangeSelect={handleChangeSelect} error={error} onPage={currentStep} employee={employee} />
 
                                 <FormEmployee handleChange={handleChange} error={error} onPage={currentStep} employee={employee} />
                                 <div className={styles.actions}>

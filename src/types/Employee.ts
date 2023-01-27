@@ -1,5 +1,4 @@
-interface EmployeeApi {
-    id: string,
+interface Employee {
     address: string,
     birthDate: string,
     email: string,
@@ -10,7 +9,7 @@ interface EmployeeApi {
     admissionDate: string,
     sector: string,
     salary: number,
-    userId: string
+    gender: string
 }
 
-export type { EmployeeApi }
+export type { Employee }
