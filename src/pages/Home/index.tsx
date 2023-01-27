@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { Header } from '../../components/Header'
 import { api } from '../../services/api'
 import { EmployeeApi } from '../../types/EmployeeApi'
+import { execGenerate } from '../../utils/generatePDF'
+import { Employee } from '../Create'
 
 import styles from './styles.module.scss'
 
@@ -21,6 +23,9 @@ function Home() {
             }).catch((error) => console.log(error)) 
         }
     
+    async function onGeneratePDF(employee: Employee) {
+        await execGenerate(employee)
+    }
 
     useEffect(() => {
         getAllEmployess()
@@ -46,8 +51,8 @@ function Home() {
                                     <p>{item.firstName}</p>
                                 </div>
                                 <div className={styles.actions}>
-                                    <a href="#">Editar</a>
-                                    <button>Excluir</button>
+                                    <Link to={`/funcionairos/editar/${item.id}`}>Editar</Link>
+                                    <button onClick={() =>  onGeneratePDF(item)}>Excluir</button>
                                 </div>
                             </div>
                         )

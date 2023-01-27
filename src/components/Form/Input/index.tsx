@@ -9,12 +9,13 @@ interface Props {
     example: string,
     name: string,
     handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    errorForm?: string
+    errorForm?: string,
+    value?: string | number
 }
 
-function Input({ example, title, type, name, handleOnChange, errorForm }: Props) {
+function Input({ example, title, type, name, handleOnChange, errorForm, value }: Props) {
     
-    const [value, setValue] = useState(false)
+    const [wasChanged, setWasChanged] = useState(false || value ? true : false)
 
     return (
         <>
@@ -32,8 +33,8 @@ function Input({ example, title, type, name, handleOnChange, errorForm }: Props)
             {type != 'file' &&
                 <div>
                     <div className={`${styles.inputContainer} ${errorForm == name ? styles.error : ''}`}>
-                        <p className={`${value ? styles.value : ''}`}>{title}</p>
-                        <input type={type} placeholder={title} name={name} onChange={(e) => [handleOnChange(e), e.target.value ? setValue(true) : setValue(false)]} />
+                        <p className={`${wasChanged ? styles.value : ''}`}>{title}</p>
+                        <input type={type} placeholder={title} name={name} onChange={(e) => [handleOnChange(e), e.target.value ? setWasChanged(true) : setWasChanged(false)]} value={value} />
                     </div>
                     <span className={styles.example}>ex: {example}</span>
                 </div>

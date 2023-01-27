@@ -38,15 +38,32 @@
     }
 
     nav {
-        svg {
-            height: 3rem;
-            cursor: pointer;
-            color: gray;
-
-            transition: all 100ms ease-in-out;
-
-            &:hover {
+        ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            list-style: none;
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            a, button {
+                height: 3rem;
+                width: 5rem;
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                color: gray;
+    
+                transition: all 100ms ease-in-out;
+            }
+            a:hover {
                 color: var(--primary-color);
+            }
+            
+            button:hover {
+                color: red;
             }
         }
     }

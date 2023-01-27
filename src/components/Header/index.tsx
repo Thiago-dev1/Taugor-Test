@@ -1,6 +1,6 @@
-import { useContext } from 'react'
-import SvgIcon from '@mui/material/SvgIcon'
+import { Link } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import styles from './styles.module.scss'
 import { useAuthentication } from '../../hooks/useAuthentication'
@@ -35,7 +35,10 @@ function Header({ currentStep }: Props) {
                 </div>
             </div>
             <nav>
-                <svg onClick={logout}><HomeIcon /></svg>
+                <ul>
+                    <li><Link to={'/'}><HomeIcon fontSize='large' /></Link></li>
+                    <li><button onClick={logout}><LogoutIcon fontSize='large' /></button></li>
+                </ul>
             </nav>
         </header>
     )

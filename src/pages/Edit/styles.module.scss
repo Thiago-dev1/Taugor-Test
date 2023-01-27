@@ -1,0 +1,77 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .PDF {
+        background-color: red;
+    }
+}
+
+.createContainer {
+    max-width: 70rem;
+    margin-left: 20rem;
+    margin-top: 1.2rem;
+
+    .details {
+        p {
+            font-weight: bold;
+            font-size: 2.2rem;
+        }
+
+        span {
+            display: block;
+            color: gray;
+        }
+    }
+}
+
+.actions {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.6rem;
+
+    button {
+        width: 13rem;
+        height: 4rem;
+        border-radius: 1.4rem;
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .back {
+        background-color: transparent;
+        border: none;
+        color: var(--primary-color);
+    }
+
+    .back:hover {
+        background-color: var(--primary-color); 
+        color: white;
+    }
+
+    .next, .buttonRegister {
+       background-color: var(--primary-color); 
+       color: white;
+       border: none;
+       text-transform: uppercase;
+       transition: all 200ms ease-in-out;
+    }
+
+    .next:hover, .buttonRegister:hover {
+        background-color: transparent;
+        color: var(--primary-color);
+    }
+
+    .next.nextNone {
+        display: none;
+    }
+
+    .buttonRegister {
+        display: none;
+    }
+
+    .buttonRegister.nextOn {
+        display: block;
+    }
+}

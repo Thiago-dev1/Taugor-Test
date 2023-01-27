@@ -12,6 +12,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useAuthentication } from './hooks/useAuthentication'
 import { User } from 'firebase/auth'
 import Register from './pages/Auth/Register'
+import Edit from './pages/Edit'
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
             <Route path='/entrar' element={!user ? <Login /> : <Navigate to='/' />} />
             <Route path='/cadastrar' element={!user ? <Register /> : <Navigate to='/' />} />
             <Route path='/funcionairos/cadastrar' element={user ? <Create /> : <Navigate to='/entrar'/>} />
+            <Route path='/funcionairos/editar/:id' element={user ? <Edit /> : <Navigate to='/entrar'/>} />
             <Route path='/' element={user ? <Home /> : <Navigate to='/entrar'/>} />
           </Routes>
         </BrowserRouter>
