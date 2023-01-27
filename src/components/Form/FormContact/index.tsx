@@ -20,8 +20,8 @@ function FormContact({handleChange, error, onPage, employee}: Props) {
             <p className={styles.formTitle}>Informações de contato do funcionário</p>
                 <div className={styles.content}>
                     <div>
-                        <Input type='text' title='Nome' example='Tiago' name='firstName' handleOnChange={handleChange} errorForm={error} value={employee?.firstName} />
-                        <Input type='text' title='Sobrenome' example='Souza' name='lastName' handleOnChange={handleChange} errorForm={error} value={employee?.lastName} />
+                        <Input type='text' title='Nome' example='Thiago' placeholder='Nome'  name='firstName' handleOnChange={handleChange} errorForm={error} value={employee?.firstName} />
+                        <Input type='text' title='Sobrenome' example='Souza' placeholder='Sobrenome' name='lastName' handleOnChange={handleChange} errorForm={error} value={employee?.lastName} />
                     </div>
                     <div className={styles.imgContainer}>
                         <div className={styles.imgTest}></div>
@@ -34,17 +34,17 @@ function FormContact({handleChange, error, onPage, employee}: Props) {
                         </div>
                     </div>
                 </div>
-                <Input type='text' title='Emprego' example='Vendedor' name='job' handleOnChange={handleChange} errorForm={error} value={employee?.job} />
-                <Input type='text' title='Endereço' example='Avenida Paulista, 1.234' name='address' handleOnChange={handleChange} errorForm={error} value={employee?.address} />
+                <Input type='text' title='Emprego'  name='job' example='Vendedor' placeholder='Emprego' handleOnChange={handleChange} errorForm={error} value={employee?.job} />
+                <Input type='text' title='Endereço' name='address' example='Rua 6 Q M Lt 32' placeholder='Endereço' handleOnChange={handleChange} errorForm={error} value={employee?.address} />
 
                 <div className={styles.contact}>
                     <div>
-                        <Input type='number' title='Telefone' example='(11) 9 9999-9999' name='phone' handleOnChange={handleChange} errorForm={error} value={employee?.phone} />
-                        <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' handleOnChange={handleChange} errorForm={error} value={employee?.email} />
+                        <Input type='number' title='Telefone' name='phone' example='6299559988' placeholder='Telefone' handleOnChange={handleChange} errorForm={error} value={employee?.phone} />
+                        <Input type='email' title='E-mail' example='thiago@gmail.com' name='email' placeholder='Email' handleOnChange={handleChange} errorForm={error} value={employee?.email} />
                     </div>
                     <div>
-                        <Input type='text' title='Nacionalidade' example='Brasileira' name='nationality' handleOnChange={handleChange} errorForm={error} value={employee?.nationality} />
-                        <Input type='date' title='Data de nascimento' example='23 jun 1985' name='birthDate' handleOnChange={handleChange} errorForm={error} value={employee?.birthDate} />
+                        <Input type='text' title='Nacionalidade' example='Brasileira' name='nationality' placeholder='Nacionalidade' handleOnChange={handleChange} errorForm={error} value={employee?.nationality} />
+                        <Input type='date' title='Data de nascimento' example='02-02-2000' name='birthDate' placeholder='Data de nascimento' handleOnChange={handleChange} errorForm={error} value={employee?.birthDate} disabled={employee?.birthDate ? true : false} />
                     </div>
                 </div>
         </div>
