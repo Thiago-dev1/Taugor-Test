@@ -1,6 +1,7 @@
 import { Template, generate, BLANK_PDF } from '@pdfme/generator'
 import { base } from '../data'
 import { Employee } from '../types/Employee';
+import { EmployeeApi } from '../types/EmployeeApi';
 
 const template: Template = {
   basePdf: base,
@@ -142,7 +143,7 @@ const template: Template = {
 };
 
 
-export async function execGenerate(employee: Employee) {
+export async function execGenerate(employee: Employee | EmployeeApi) {
   const inputs = [
     {
       "nome": employee.firstName + employee.lastName,

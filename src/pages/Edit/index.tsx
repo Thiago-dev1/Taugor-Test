@@ -139,7 +139,7 @@ function Edit() {
 
         if (res) {
             console.log(message)
-            api.post('/employees', employee).then((response) => {
+            api.put(`/employees/edit/${id}`, employee).then((response) => {
                 navigate('/')
             })
         }
@@ -232,7 +232,7 @@ function Edit() {
                                         className={`${styles.buttonRegister} ${currentStep == 2 ? styles.nextOn : ''}`}
                                         type='submit'
                                     >
-                                        Cadastrar
+                                        Atualizar
                                     </button>
                                 </div>
                                 {message && (

@@ -71,8 +71,9 @@
                 color: white;
             }
             
-            a:hover {
+            a:hover, .btnPDF:hover {
                 background-color: var(--primary-color);
+                border: var(--primary-color);
                 color: white;
             }
         }

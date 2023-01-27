@@ -10,7 +10,8 @@ interface EmployeeApi {
     admissionDate: string,
     sector: string,
     salary: number,
-    userId: string
+    userId: string,
+    gender: string
 }
 
 export type { EmployeeApi }

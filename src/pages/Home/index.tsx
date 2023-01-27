@@ -2,9 +2,10 @@ import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Header } from '../../components/Header'
 import { api } from '../../services/api'
+import { Employee } from '../../types/Employee'
 import { EmployeeApi } from '../../types/EmployeeApi'
 import { execGenerate } from '../../utils/generatePDF'
-import { Employee } from '../Create'
+
 
 import styles from './styles.module.scss'
 
@@ -23,7 +24,7 @@ function Home() {
             }).catch((error) => console.log(error)) 
         }
     
-    async function onGeneratePDF(employee: Employee) {
+    async function onGeneratePDF(employee: Employee | EmployeeApi) {
         await execGenerate(employee)
     }
 
@@ -52,7 +53,9 @@ function Home() {
                                 </div>
                                 <div className={styles.actions}>
                                     <Link to={`/funcionairos/editar/${item.id}`}>Editar</Link>
-                                    <button onClick={() =>  onGeneratePDF(item)}>Excluir</button>
+                                    <Link to={`/funcionairos/info/${item.id}`}>Ver</Link>
+                                    <button>Demitir</button>
+                                    <button className={styles.btnPDF} onClick={() =>  onGeneratePDF(item)}>Gerar PDF</button>
                                 </div>
                             </div>
                         )
