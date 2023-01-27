@@ -23,7 +23,7 @@ function Register() {
 
     const [error, setError] = useState('')
     const [message, setMessage] = useState<string | true>('')
-    const { createUser ,error: authError, loading } = useAuthentication()
+    const { createUser, error: authError, loading } = useAuthentication()
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setError('')
@@ -72,21 +72,23 @@ function Register() {
         if (authError) {
             setMessage(authError);
         }
-      }, [authError]);
-    
+    }, [authError]);
+
     return (
         <div className={styles.registerContainer}>
             <form className={styles.formRegister} onSubmit={handleSubmit} >
-                <Input type='text' title='Nome' example='tiago' name='name' handleOnChange={handleChange} errorForm={error} />
-                <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' handleOnChange={handleChange} errorForm={error} />
-                <Input type='password' title='Senha' example='******' name='password' handleOnChange={handleChange} errorForm={error} />
-                <div className={styles.actions}>
-                    <Button variant="contained" size='large' type='submit'>
-                        Cadastrar
-                    </Button>
-                    <Link to='/entrar'>Entrar</Link>
-                </div>
-                {message && <p>{message}</p>}
+                <>
+                    <Input type='text' title='Nome' example='tiago' name='name' onChange={handleChange} error_form={error} />
+                    <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' onChange={handleChange} error_form={error} />
+                    <Input type='password' title='Senha' example='******' name='password' onChange={handleChange} error_form={error} />
+                    <div className={styles.actions}>
+                        <Button variant="contained" size='large' type='submit'>
+                            Cadastrar
+                        </Button>
+                        <Link to='/entrar'>Entrar</Link>
+                    </div>
+                    {message && <p>{message}</p>}
+                </>
             </form>
         </div>
     )

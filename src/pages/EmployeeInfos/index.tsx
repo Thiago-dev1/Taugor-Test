@@ -103,14 +103,15 @@ function EmployeeInfos() {
             )}
             {!loading && historico.length != 0 && (
                 <div>
-                    {historico.map(i => {
-                        const date = new Date(i.createdAt._seconds * 1000)
+                    {/* {historico.map(i => {
+                        // const date = new Date(i.createdAt._seconds * 1000)
 
 
                         return (
                             <p>{date.toLocaleString()}</p>
                         )
-                    })}
+                    })} */}
+                    <p>a</p>
                 </div>
             )}
         </div>

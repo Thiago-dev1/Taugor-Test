@@ -1,10 +1,8 @@
 
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Input } from '../../../components/Form/Input'
 import Button from '@mui/material/Button'
 
-
-import { api } from '../../../services/api'
 import { useAuthentication } from '../../../hooks/useAuthentication'
 import { Link } from 'react-router-dom'
 
@@ -82,8 +80,8 @@ function Login() {
     return (
         <div className={styles.loginContainer}>
             <form className={styles.formLogin} onSubmit={handleSubmit} >
-                <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' handleOnChange={handleChange} errorForm={error} />
-                <Input type='password' title='Senha' example='******' name='password' handleOnChange={handleChange} errorForm={error} />
+                <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' onChange={handleChange} error_form={error} />
+                <Input type='password' title='Senha' example='******' name='password'  onChange={handleChange} error_form={error} />
                 <div className={styles.actions}>
                     <Button variant="contained" size='large' type='submit'>
                         Entrar
