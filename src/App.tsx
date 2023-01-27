@@ -13,6 +13,7 @@ import { useAuthentication } from './hooks/useAuthentication'
 import { User } from 'firebase/auth'
 import Register from './pages/Auth/Register'
 import Edit from './pages/Edit'
+import NotFound from './pages/NotFound'
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
             <Route path='/funcionairos/cadastrar' element={user ? <Create /> : <Navigate to='/entrar'/>} />
             <Route path='/funcionairos/editar/:id' element={user ? <Edit /> : <Navigate to='/entrar'/>} />
             <Route path='/' element={user ? <Home /> : <Navigate to='/entrar'/>} />
+            <Route path='/*' element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

@@ -11,6 +11,7 @@ import { FormEmployee } from '../../components/Form/FormEmployee'
 import { Header } from '../../components/Header'
 import { api } from '../../services/api'
 import { viewTest } from '../../utils/viewPDF'
+import { AxiosError } from 'axios'
 
 
 
@@ -178,6 +179,28 @@ function Edit() {
 
     }
 
+    async function getEmployee() {
+       try {
+            await api.get(`/employees/${id}`)
+                .then(response => {
+                    setLoading(true)
+                    setEmployee(response.data)
+                    setLoading(false)
+                }).catch((error: AxiosError) => {
+                    console.log(error.response?.data)
+                    // @ts-ignore
+                    if(error.response?.data.message == 'Não encontrado') {
+                        navigate('/*')
+                    }
+                })
+            
+       } catch (error) {
+        // @ts-ignore
+            console.log(error)
+       }
+        
+    }
+
     useEffect(() => {
         if (domContainer == null) {
             domContainer = document.getElementById('container') as HTMLElement
@@ -188,11 +211,7 @@ function Edit() {
     }, [employee])
 
     useEffect(() => {
-        api.get(`/employees/${id}`).then(response => {
-            setLoading(true)
-            setEmployee(response.data)
-            setLoading(false)
-        })
+        getEmployee()
     }, [])
 
     return (
