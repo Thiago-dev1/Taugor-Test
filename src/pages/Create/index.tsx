@@ -13,12 +13,15 @@ import { api } from '../../services/api'
 import { viewTest } from '../../utils/viewPDF'
 import { Employee } from '../../types/Employee'
 import { useInsertDocument } from '../../hooks/useInsertDocument'
+import { useAuthValue } from '../../contexts/AuthContext'
 
 
 
 function Create() {
     const navigate = useNavigate()
-    const {insertDocument, errorFirebase, loading} = useInsertDocument('employees')
+    const { user } = useAuthValue()
+    const uid = user!.uid
+    const {insertDocument, errorFirebase, loading} = useInsertDocument('employees', uid)
 
     const [employee, setEmployee] = useState<Employee>({
         address: '',

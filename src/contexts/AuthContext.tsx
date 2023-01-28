@@ -1,16 +1,26 @@
+import { User } from "firebase/auth";
 import { useContext, createContext, ReactNode } from "react";
 
-const AuthContext = createContext('')
+
+interface  AuthContextData {
+  user: User | null
+}
+
+
+
+const AuthContext = createContext({} as AuthContextData) 
 
 interface AuthProviderProps {
     children: ReactNode,
-    value: any
+    user: User | null
 }
 
-export function AuthProvider({ children, value }: AuthProviderProps) {
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
 
 export function useAuthValue() {
   return useContext(AuthContext);
 }
+
+export function AuthProvider({ children, user }: AuthProviderProps) {
+  return <AuthContext.Provider value={{ user}}>{children}</AuthContext.Provider>;
+}
+

@@ -4,7 +4,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore'
 import { Employee } from '../types/Employee';
 
 
-export const useInsertDocument = (docCollection: string) => {
+export const useInsertDocument = (docCollection: string, uid: string) => {
     const [loading, setLoading] = useState(false)
     const [errorFirebase, setErrorFirebase] = useState('')
 
@@ -25,7 +25,7 @@ export const useInsertDocument = (docCollection: string) => {
         let message = ''
 
         try {
-            const newDocument = { ...document, createdAt: Timestamp.now(), updatedAt: Timestamp.now(), active: true };
+            const newDocument = { ...document, createdAt: Timestamp.now(), updatedAt: Timestamp.now(), active: true, userId: uid };
 
             const insertedDocument = await addDoc(
                 collection(db, docCollection),

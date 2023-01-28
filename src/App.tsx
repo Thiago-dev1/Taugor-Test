@@ -46,7 +46,7 @@ function App() {
   return (
     <>
       {/* <Header currentStep={currentStep} /> */}
-      <AuthProvider value={{user}}>
+      <AuthProvider user={user}>
         <BrowserRouter>
           <Routes>
             <Route path='/entrar' element={!user ? <Login /> : <Navigate to='/' />} />
