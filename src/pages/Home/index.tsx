@@ -34,9 +34,9 @@ function Home() {
         await execGenerate(employee)
     }
 
-    // useEffect(() => {
-    //     getAllEmployess()
-    // }, [])
+    useEffect(() => {
+        console.log(employees)
+    }, [employees])
 
 
     return (

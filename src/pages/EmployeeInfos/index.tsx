@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useFetchDocument } from '../../hooks/useFetchDocument'
 import { api } from '../../services/api'
 import { Employee } from '../../types/Employee'
 import { EmployeeApi } from '../../types/EmployeeApi'
@@ -10,65 +11,51 @@ import styles from './styles.module.scss'
 function EmployeeInfos() {
     const { id } = useParams()
 
-    const [employee, setEmployee] = useState<EmployeeApi>({
-        address: '',
-        birthDate: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
-        admissionDate: '',
-        office: '',
-        salary: 0,
-        sector: '',
-        gender: '',
-        id: '',
-        userId: ''
-    })
-    const [historico, setHistorico] = useState([])
-    const [loading, setLoading] = useState(true)
+    const { employee, error, loading } = useFetchDocument('employees', String(id))
+    
+    // const [historico, setHistorico] = useState([])
 
-    async function getHistorico() {
-        try {
-            api.get(`/employees/updateHistory/${id}`)
-                .then(response => {
-                    setLoading(true)
-                    setHistorico(response.data)
-                    setLoading(false)
-                }).catch((error: AxiosError) => {
-                    console.log(error.response?.data)
-                })
+    // async function getHistorico() {
+    //     try {
+    //         api.get(`/employees/updateHistory/${id}`)
+    //             .then(response => {
+    //                 setLoading(true)
+    //                 setHistorico(response.data)
+    //                 setLoading(false)
+    //             }).catch((error: AxiosError) => {
+    //                 console.log(error.response?.data)
+    //             })
 
-        } catch (error) {
-            // @ts-ignore
-            console.log(error)
-        }
+    //     } catch (error) {
+    //         // @ts-ignore
+    //         console.log(error)
+    //     }
 
-    }
+    // }
 
-    async function getEmployee() {
-        try {
-            api.get(`/employees/${id}`)
-                .then(response => {
-                    setLoading(true)
-                    setEmployee(response.data)
-                    console.log(response.data)
-                    setLoading(false)
-                }).catch((error: AxiosError) => {
-                    console.log(error.response?.data)
-                })
+    // async function getEmployee() {
+    //     try {
+    //         api.get(`/employees/${id}`)
+    //             .then(response => {
+    //                 setLoading(true)
+    //                 setEmployee(response.data)
+    //                 console.log(response.data)
+    //                 setLoading(false)
+    //             }).catch((error: AxiosError) => {
+    //                 console.log(error.response?.data)
+    //             })
 
-        } catch (error) {
-            // @ts-ignore
-            console.log(error)
-        }
+    //     } catch (error) {
+    //         // @ts-ignore
+    //         console.log(error)
+    //     }
 
-    }
+    // }
 
-    useEffect(() => {
-        getEmployee()
-        getHistorico()
-    }, [])
+    // useEffect(() => {
+    //     getEmployee()
+    //     getHistorico()
+    // }, [])
 
     return (
         <div>
@@ -101,19 +88,7 @@ function EmployeeInfos() {
                     </div>
                 </div>
             )}
-            {!loading && historico.length != 0 && (
-                <div>
-                    {/* {historico.map(i => {
-                        // const date = new Date(i.createdAt._seconds * 1000)
-
-
-                        return (
-                            <p>{date.toLocaleString()}</p>
-                        )
-                    })} */}
-                    <p>a</p>
-                </div>
-            )}
+            
         </div>
     )
 }

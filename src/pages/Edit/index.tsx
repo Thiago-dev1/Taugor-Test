@@ -13,6 +13,8 @@ import { api } from '../../services/api'
 import { viewTest } from '../../utils/viewPDF'
 import { AxiosError } from 'axios'
 import { Employee } from '../../types/Employee'
+import { useFetchDocument } from '../../hooks/useFetchDocument'
+import { EmployeeApi } from '../../types/EmployeeApi'
 
 
 
@@ -20,29 +22,22 @@ function Edit() {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const [employee, setEmployee] = useState<Employee>({
-        address: '',
-        birthDate: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
-        admissionDate: '',
-        office: '',
-        salary: 0,
-        sector: '',
-        gender: ''
-    })
+    const { employee: employeeFirebase, error: errorFirebase, loading } = useFetchDocument('employees', String(id))
+
     let domContainer = document.getElementById('container') as HTMLElement
 
     async function onGeneratePDF() {
         await execGenerate(employee)
     }
 
-    const [error, setError] = useState('')
     const [message, setMessage] = useState('')
     const [currentStep, setCurrentStep] = useState(1)
-    const [loading, setLoading] = useState(true)
+    const [employee, setEmployee] = useState<EmployeeApi>(employeeFirebase)
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        setEmployee(employeeFirebase)
+    }, [employeeFirebase])
 
     // falta pegar a imagem
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -156,28 +151,6 @@ function Edit() {
 
     }
 
-    async function getEmployee() {
-       try {
-            await api.get(`/employees/${id}`)
-                .then(response => {
-                    setLoading(true)
-                    setEmployee(response.data)
-                    setLoading(false)
-                }).catch((error: AxiosError) => {
-                    console.log(error.response?.data)
-                    // @ts-ignore
-                    if(error.response?.data.message == 'Não encontrado') {
-                        navigate('/*')
-                    }
-                })
-            
-       } catch (error) {
-        // @ts-ignore
-            console.log(error)
-       }
-        
-    }
-
     useEffect(() => {
         if (domContainer == null) {
             domContainer = document.getElementById('container') as HTMLElement
@@ -186,10 +159,6 @@ function Edit() {
             viewTest(domContainer, employee)
         }
     }, [employee])
-
-    useEffect(() => {
-        getEmployee()
-    }, [])
 
     return (
         <>

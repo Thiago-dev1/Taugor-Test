@@ -31,7 +31,7 @@ export const useFetchDocuments = (docCollection: string, uid: string) => {
             
             q =  query(collection(db, docCollection), where('userId', '==', uid))
             
-            console.log(q)
+            
 
             onSnapshot(q, (querysnapshot) => {
                 // @ts-ignore
@@ -41,7 +41,6 @@ export const useFetchDocuments = (docCollection: string, uid: string) => {
                 })))
             })
 
-            // console.log(employees)
             setLoading(false)
 
         } catch (error) {
