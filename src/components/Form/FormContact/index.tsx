@@ -29,11 +29,12 @@ function FormContact({ handleChange, error, onPage, employee, handleChangeSelect
                 <div className={styles.imgContainer}>
                     <div className={styles.imgTest}></div>
                     <div className={styles.test}>
+                        {/* Implementar em outro momento!! */}
                         {/* <Input type='file' title='Foto Do perfil' example='' /> */}
-                        <div className={styles.box}>
+                        {/* <div className={styles.box}>
                             <input id="checkbox" type="checkbox" onChange={() => setImgRoudend(!imgRoudend)} checked={imgRoudend} />
                             <label htmlFor="checkbox" className={`${styles.labelCheck} ${imgRoudend ? styles.check : ''}`}></label>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

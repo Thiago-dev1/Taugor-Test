@@ -11,7 +11,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 57.23,
-          "y": 21.43
+          "y": 18.23
         },
         "width": 99.28,
         "height": 7,
@@ -25,7 +25,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 59.27,
-          "y": 34.92
+          "y": 30.99
         },
         "width": 38.17,
         "height": 4,
@@ -38,7 +38,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 41.8,
-          "y": 39.94
+          "y": 36.50
         },
         "width": 35,
         "height": 4,
@@ -51,7 +51,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 39.16,
-          "y": 45.77
+          "y": 42.40 
         },
         "width": 60.13,
         "height": 4,
@@ -64,7 +64,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 35.72,
-          "y": 73.55
+          "y": 70.10
         },
         "width": 43.46,
         "height": 4,
@@ -77,7 +77,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 37.58,
-          "y": 79.37
+          "y": 75.60
         },
         "width": 35,
         "height": 4,
@@ -90,7 +90,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 35.19,
-          "y": 84.66
+          "y": 81.20
         },
         "width": 35,
         "height": 4,
@@ -103,7 +103,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 56.62,
-          "y": 90.5
+          "y": 87.1
         },
         "width": 35,
         "height": 4,
@@ -116,7 +116,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 35.5,
-          "y": 111.39
+          "y": 108.39
         },
         "width": 77.33,
         "height": 4,
@@ -129,7 +129,7 @@ const template: Template = {
         "type": "text",
         "position": {
           "x": 41.54,
-          "y": 118.8
+          "y": 115.8
         },
         "width": 52.46,
         "height": 4,
