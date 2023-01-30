@@ -23,8 +23,7 @@ export const useFetchDocuments = (docCollection: string, uid: string) => {
             let q
             
             if (docCollection == 'employees') {
-                q =  query(collection(db, docCollection), where('userId', '==', uid))
-                q = query(collection(db, docCollection), where('active', '==', true))
+                q =  query(collection(db, docCollection), where('userId', '==', uid), where('active', '==', true))
             } else {
                 q =  query(collection(db, docCollection), where('idEmployee', '==', uid))
             }

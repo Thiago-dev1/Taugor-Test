@@ -56,31 +56,35 @@ function EmployeeInfos() {
 
                 )}
 
-                <div className={styles.updatedInfo}>
-                    <h2>Historico de atualização</h2>
-                    <table className=' '>
-                        <thead>
-                            <tr>
-                                <th>Endereço</th>
-                                <th>Cargo</th>
-                                <th>Salario</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody className="">
-                            {employeeHistory.map(item => {
-                                return (
-                                    <tr key={item.id} className="">
-                                        <td className={employee.address == item.address ? styles.equal : styles.notEqual}>{item.address}</td>
-                                        <td className={employee.office == item.office ? styles.equal : styles.notEqual}>{item.office}</td>
-                                        <td className={employee.salary == item.salary ? styles.equal : styles.notEqual}>{formateValue(item.salary)}</td>
-                                        <td className={employee.email == item.email ? styles.equal : styles.notEqual}>{item.email}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                {loading2 && <p>Carregando</p>}
+
+                {!loading && employeeHistory && (
+                    <div className={styles.updatedInfo}>
+                        <h2>Historico de atualização</h2>
+                        <table className=' '>
+                            <thead>
+                                <tr>
+                                    <th>Endereço</th>
+                                    <th>Cargo</th>
+                                    <th>Salario</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody className="">
+                                {employeeHistory.map(item => {
+                                    return (
+                                        <tr key={item.id} className="">
+                                            <td className={employee.address == item.address ? styles.equal : styles.notEqual}>{item.address}</td>
+                                            <td className={employee.office == item.office ? styles.equal : styles.notEqual}>{item.office}</td>
+                                            <td className={employee.salary == item.salary ? styles.equal : styles.notEqual}>{formateValue(item.salary)}</td>
+                                            <td className={employee.email == item.email ? styles.equal : styles.notEqual}>{item.email}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         </>
     )

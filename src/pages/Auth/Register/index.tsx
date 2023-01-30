@@ -78,9 +78,9 @@ function Register() {
         <div className={styles.registerContainer}>
             <form className={styles.formRegister} onSubmit={handleSubmit} >
                 <>
-                    <Input type='text' title='Nome' example='tiago' name='name' onChange={handleChange} error_form={error} />
-                    <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' onChange={handleChange} error_form={error} />
-                    <Input type='password' title='Senha' example='******' name='password' onChange={handleChange} error_form={error} />
+                    <Input type='text' title='Nome' example='tiago' name='name' onChange={handleChange} error_form={error} placeholder='Nome' />
+                    <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' onChange={handleChange} error_form={error} placeholder='E-mail' />
+                    <Input type='password' title='Senha' example='******' name='password' onChange={handleChange} error_form={error} placeholder='Senha' />
                     <div className={styles.actions}>
                         <Button variant="contained" size='large' type='submit'>
                             Cadastrar

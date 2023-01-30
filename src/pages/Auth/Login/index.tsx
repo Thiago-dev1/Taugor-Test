@@ -80,8 +80,8 @@ function Login() {
     return (
         <div className={styles.loginContainer}>
             <form className={styles.formLogin} onSubmit={handleSubmit} >
-                <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' onChange={handleChange} error_form={error} />
-                <Input type='password' title='Senha' example='******' name='password'  onChange={handleChange} error_form={error} />
+                <Input type='email' title='E-mail' example='tiago.souza@email.com' name='email' onChange={handleChange} error_form={error}  placeholder='E-mail' />
+                <Input type='password' title='Senha' example='******' name='password'  onChange={handleChange} error_form={error} placeholder='Senha' />
                 <div className={styles.actions}>
                     <Button variant="contained" size='large' type='submit'>
                         Entrar
