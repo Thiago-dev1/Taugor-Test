@@ -40,7 +40,7 @@ const template: Template = {
           "x": 41.8,
           "y": 36.50
         },
-        "width": 35,
+        "width": 80,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
@@ -53,7 +53,7 @@ const template: Template = {
           "x": 39.16,
           "y": 42.40 
         },
-        "width": 60.13,
+        "width": 80,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
@@ -66,7 +66,7 @@ const template: Template = {
           "x": 35.72,
           "y": 70.10
         },
-        "width": 43.46,
+        "width": 80,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
@@ -79,7 +79,7 @@ const template: Template = {
           "x": 37.58,
           "y": 75.60
         },
-        "width": 35,
+        "width": 80,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
@@ -92,7 +92,7 @@ const template: Template = {
           "x": 35.19,
           "y": 81.20
         },
-        "width": 35,
+        "width": 80,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
@@ -105,7 +105,7 @@ const template: Template = {
           "x": 56.62,
           "y": 87.1
         },
-        "width": 35,
+        "width": 80,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
@@ -118,7 +118,7 @@ const template: Template = {
           "x": 35.5,
           "y": 108.39
         },
-        "width": 77.33,
+        "width": 85,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
@@ -131,7 +131,7 @@ const template: Template = {
           "x": 41.54,
           "y": 115.8
         },
-        "width": 52.46,
+        "width": 70,
         "height": 4,
         "alignment": "left",
         "fontSize": 10,
