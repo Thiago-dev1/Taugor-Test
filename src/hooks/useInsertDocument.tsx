@@ -31,6 +31,21 @@ export const useInsertDocument = (docCollection: string, uid: string) => {
                 collection(db, docCollection),
                 newDocument
             );
+
+            
+
+            const newEmployeeHistory = {
+                address: document.address,
+                email: document.email,
+                phone: document.phone,
+                office: document.office,
+                salary: document.salary,
+                idEmployee: insertedDocument.id}
+
+             await addDoc(
+                    collection(db, 'employeeHistory'),
+                    newEmployeeHistory
+                )
             
             message = 'Cadastrado com sucesso'
             

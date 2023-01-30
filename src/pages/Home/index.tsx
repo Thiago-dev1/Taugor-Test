@@ -12,6 +12,7 @@ import { collection, doc, getDoc, onSnapshot, where } from 'firebase/firestore'
 import styles from './styles.module.scss'
 import { useAuthValue } from '../../contexts/AuthContext'
 import { useFetchDocuments } from '../../hooks/useFetchDocuments'
+import { useUpdateDocument } from '../../hooks/useUpdateDocument'
 
 function Home() {
     // const [employees, setEmployees] = useState<EmployeeApi[]>([])
@@ -21,17 +22,20 @@ function Home() {
     const uid = user!.uid
     console.log(uid)
 
-    const { employees, error, loading,  } = useFetchDocuments('employees', uid)
+    const { documents: employees, error, loading,  } = useFetchDocuments('employees', uid)
 
-    
-
-    async function getAllEmployess() {
-
-
-    }
+    const { updateDocument } = useUpdateDocument('employees')
 
     async function onGeneratePDF(employee: Employee | EmployeeApi) {
         await execGenerate(employee)
+    }
+
+    async function handledDsmiss (id: string) {
+       const data = {
+            active: false
+        }
+
+        await updateDocument(data, id)
     }
 
     useEffect(() => {
@@ -60,7 +64,7 @@ function Home() {
                                 <div className={styles.actions}>
                                     <Link to={`/funcionairos/editar/${item.id}`}>Editar</Link>
                                     <Link to={`/funcionairos/info/${item.id}`}>Ver</Link>
-                                    <button>Demitir</button>
+                                    <button onClick={() => handledDsmiss(item.id)}>Demitir</button>
                                     <button className={styles.btnPDF} onClick={() => onGeneratePDF(item)}>Gerar PDF</button>
                                 </div>
                             </div>

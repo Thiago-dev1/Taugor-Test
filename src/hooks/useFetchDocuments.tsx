@@ -7,7 +7,7 @@ import { EmployeeApi } from '../types/EmployeeApi'
 
 export const useFetchDocuments = (docCollection: string, uid: string) => {
     
-    const [employees, setEmployees] = useState<EmployeeApi[]>([])
+    const [documents, setDocuments] = useState<EmployeeApi[]>([])
     const [error, setErro] = useState(null)
     const [loading, setLoading] = useState(false)
     const [cancelled, setCancelled] = useState(false)
@@ -21,21 +21,17 @@ export const useFetchDocuments = (docCollection: string, uid: string) => {
         
         try {
             let q
-
-            // if(uid) {
-
-            //     q = query(collectionRef, where('uid', '==', uid), orderBy('createdAt', 'desc'))
-            // } else {
-            //     q = query(collectionRef, orderBy('createdAt', 'desc'))
-            // } 
             
-            q =  query(collection(db, docCollection), where('userId', '==', uid))
+            if (docCollection == 'employees') {
+                q =  query(collection(db, docCollection), where('userId', '==', uid))
+                q = query(collection(db, docCollection), where('active', '==', true))
+            } else {
+                q =  query(collection(db, docCollection), where('idEmployee', '==', uid))
+            }
             
-            
-
             onSnapshot(q, (querysnapshot) => {
                 // @ts-ignore
-                setEmployees(querysnapshot.docs.map((doc) => ({
+                setDocuments(querysnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data()
                 })))
@@ -60,5 +56,5 @@ export const useFetchDocuments = (docCollection: string, uid: string) => {
         return () => setCancelled(true)
     }, [])
  
-    return { employees, loading, error }
+    return { documents, loading, error }
 }

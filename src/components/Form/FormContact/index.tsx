@@ -23,8 +23,8 @@ function FormContact({ handleChange, error, onPage, employee, handleChangeSelect
             <p className={styles.formTitle}>Informações de contato do funcionário</p>
             <div className={styles.content}>
                 <div>
-                    <Input type='text' title='Nome' example='Thiago' placeholder='Nome' name='firstName' onChange={(e) => handleChange(e)} error_form={error} value={employee?.firstName} className={`${employee?.firstName ? 'firstName' : ''}`} />
-                    <Input type='text' title='Sobrenome' example='Souza' placeholder='Sobrenome' name='lastName' onChange={(e) => handleChange(e)} error_form={error} value={employee?.lastName} className={`${employee?.lastName ? 'lastName' : ''}`} />
+                    <Input type='text' title='Nome' example='Thiago' placeholder='Nome' name='firstName' onChange={(e) => handleChange(e)} error_form={error} value={employee?.firstName} className={`${employee?.firstName ? 'firstName' : ''}`} disabled={page == 'create' ? false : employee?.firstName ? true : false} />
+                    <Input type='text' title='Sobrenome' example='Souza' placeholder='Sobrenome' name='lastName' onChange={(e) => handleChange(e)} error_form={error} value={employee?.lastName} className={`${employee?.lastName ? 'lastName' : ''}`} disabled={page == 'create' ? false : employee?.lastName ? true : false} />
                 </div>
                 <div className={styles.imgContainer}>
                     <div className={styles.imgTest}></div>

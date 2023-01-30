@@ -15,6 +15,7 @@ import { AxiosError } from 'axios'
 import { Employee } from '../../types/Employee'
 import { useFetchDocument } from '../../hooks/useFetchDocument'
 import { EmployeeApi } from '../../types/EmployeeApi'
+import { useUpdateDocument } from '../../hooks/useUpdateDocument'
 
 
 
@@ -22,7 +23,9 @@ function Edit() {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const { employee: employeeFirebase, error: errorFirebase, loading } = useFetchDocument('employees', String(id))
+    const { document: employeeFirebase, loading } = useFetchDocument('employees', String(id))
+
+    const { updateDocument } = useUpdateDocument('employees')
 
     let domContainer = document.getElementById('container') as HTMLElement
 
@@ -46,9 +49,8 @@ function Edit() {
     }
 
     function handleChangeSelect(e: React.ChangeEvent<HTMLSelectElement>) {
-        
+
         setEmployee({ ...employee, [e.target.name]: e.target.value })
-        console.log(employee)
     }
 
     function verifySetp2() {
@@ -133,10 +135,18 @@ function Edit() {
         res = verifySetp3()
 
         if (res) {
-            console.log(message)
-            api.put(`/employees/edit/${id}`, employee).then((response) => {
+            // somente os campos que serão atualizados
+            const body = {
+                address: employee.address,
+                email: employee.email,
+                phone: employee.phone,
+                office: employee.office,
+                salary: employee.salary,
+            }
+            const response = await updateDocument(body, String(id))
+            if (response == 'Atualizado com sucesso') {
                 navigate('/')
-            })
+            }
         }
     }
 

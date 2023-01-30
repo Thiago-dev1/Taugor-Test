@@ -1,7 +1,37 @@
-.currentInfo {
+.currentInfo , .updatedInfo {
     max-width: 70rem;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+
+    thead {
+        text-align: center;
+        tr {
+        }
+    }
+    
+    tbody {
+        text-align: center;
+        td {
+            min-width: 8rem;
+        }
+    }
+}
+
+
+.updatedInfo {
+    margin-top: 3.2rem;
+
+    tbody {
+        font-weight: bold;
+    }
+
+    .equal {
+        color: green;
+    }
+
+    .notEqual {
+        color: red;
+    }
 }

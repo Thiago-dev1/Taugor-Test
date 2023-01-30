@@ -1,95 +1,88 @@
 import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { Header } from '../../components/Header'
 import { useFetchDocument } from '../../hooks/useFetchDocument'
+import { useFetchDocuments } from '../../hooks/useFetchDocuments'
 import { api } from '../../services/api'
 import { Employee } from '../../types/Employee'
 import { EmployeeApi } from '../../types/EmployeeApi'
+import { formateValue } from '../../utils/fortmatValue'
 
 import styles from './styles.module.scss'
 
 function EmployeeInfos() {
     const { id } = useParams()
 
-    const { employee, error, loading } = useFetchDocument('employees', String(id))
-    
-    // const [historico, setHistorico] = useState([])
+    const { document: employee, error, loading } = useFetchDocument('employees', String(id))
 
-    // async function getHistorico() {
-    //     try {
-    //         api.get(`/employees/updateHistory/${id}`)
-    //             .then(response => {
-    //                 setLoading(true)
-    //                 setHistorico(response.data)
-    //                 setLoading(false)
-    //             }).catch((error: AxiosError) => {
-    //                 console.log(error.response?.data)
-    //             })
-
-    //     } catch (error) {
-    //         // @ts-ignore
-    //         console.log(error)
-    //     }
-
-    // }
-
-    // async function getEmployee() {
-    //     try {
-    //         api.get(`/employees/${id}`)
-    //             .then(response => {
-    //                 setLoading(true)
-    //                 setEmployee(response.data)
-    //                 console.log(response.data)
-    //                 setLoading(false)
-    //             }).catch((error: AxiosError) => {
-    //                 console.log(error.response?.data)
-    //             })
-
-    //     } catch (error) {
-    //         // @ts-ignore
-    //         console.log(error)
-    //     }
-
-    // }
-
-    // useEffect(() => {
-    //     getEmployee()
-    //     getHistorico()
-    // }, [])
+    const { documents: employeeHistory, loading: loading2 } = useFetchDocuments('employeeHistory', String(id))
 
     return (
-        <div>
-            {loading && <p>Carregando</p>}
-            {!loading && employee && (
-                <div className={styles.currentInfo}>
-                    <h1>Informações atuais</h1>
-                    <div>
-                        <p>{employee.firstName} {employee.lastName}</p>
+        <>
+            <Header />
+            <div >
+                {loading && <p>Carregando</p>}
+                {!loading && employee && (
+                    <div className={styles.currentInfo}>
+                        <h2>Informações atuais</h2>
+                        <table className=' '>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Data de nascimento</th>
+                                    <th>Endereço</th>
+                                    <th>Cargo</th>
+                                    <th>Salario</th>
+                                    <th>Setor</th>
+                                    <th>Email</th>
+                                    <th>Contrado em</th>
+                                </tr>
+                            </thead>
+                            <tbody className="">
+                                <tr key={employee.id} className="">
+                                    <td>{employee.firstName} {employee.lastName}</td>
+                                    <td>{employee.birthDate}</td>
+                                    <td>{employee.address}</td>
+                                    <td>{employee.office}</td>
+                                    <td>{formateValue(employee.salary)}</td>
+                                    <td>{employee.sector}</td>
+                                    <td>{employee.email}</td>
+                                    <td>{employee.admissionDate}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
-                    <div>
-                        <p>{employee.birthDate}</p>
-                        <p>{employee.gender == 'M' ? 'Masculino' : 'Feminino'}</p>
-                    </div>
+                )}
 
-                    <div>
-                        <p>{employee.phone}</p>
-                        <p>{employee.email}</p>
-                        <p>{employee.address}</p>
-                    </div>
-                    <div>
-                        <p>{new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL'
-                        }).format(employee.salary)}</p>
-                        <p>{employee.sector}</p>
-                        <p>{employee.office}</p>
-                        <p>{employee.admissionDate}</p>
-                    </div>
+                <div className={styles.updatedInfo}>
+                    <h2>Historico de atualização</h2>
+                    <table className=' '>
+                        <thead>
+                            <tr>
+                                <th>Endereço</th>
+                                <th>Cargo</th>
+                                <th>Salario</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody className="">
+                            {employeeHistory.map(item => {
+                                return (
+                                    <tr key={item.id} className="">
+                                        <td className={employee.address == item.address ? styles.equal : styles.notEqual}>{item.address}</td>
+                                        <td className={employee.office == item.office ? styles.equal : styles.notEqual}>{item.office}</td>
+                                        <td className={employee.salary == item.salary ? styles.equal : styles.notEqual}>{formateValue(item.salary)}</td>
+                                        <td className={employee.email == item.email ? styles.equal : styles.notEqual}>{item.email}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
                 </div>
-            )}
-            
-        </div>
+            </div>
+        </>
     )
 }
 

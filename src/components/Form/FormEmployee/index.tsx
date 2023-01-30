@@ -30,19 +30,18 @@ function FormEmployee({ handleChange, error, onPage, employee, handleChangeSelec
                     <option value='Diretor'>Diretor</option>
                 </select>
             </div>
-            <Input type='date' title='Data de admissão' example='24/01/2023' name='admissionDate' placeholder='Data de admissão' onChange={(e) => handleChange(e)} error_form={error} value={employee?.admissionDate} disabled={employee?.admissionDate ? true : false} test={'true'} />
+            <Input type='date' title='Data de admissão' example='24/01/2023' name='admissionDate' placeholder='Data de admissão' onChange={(e) => handleChange(e)} error_form={error} value={employee?.admissionDate} disabled={page == 'create' ? false : employee?.admissionDate ? true : false} test={'true'} />
 
             <div className={styles.select}>
                 <p>Setor</p>
-                <select name='sector' defaultValue={page == 'create' ? 'RH' : employee?.sector} onChange={(e) => handleChangeSelect(e)}>
+                <select name='sector' defaultValue={page == 'create' ? 'RH' : employee?.sector} onChange={(e) => handleChangeSelect(e)} disabled={page == 'create' ? false : employee?.sector ? true : false}>
                     <option value='Administrativo'>Administrativo</option>
                     <option value='Financeiro'>Financeiro</option>
                     <option value='Comercial'>Comercial</option>
                     <option value='RH'>RH</option>
                 </select>
             </div>
-            {/* <Input type='text' title='Setor' example='Vendas' name='sector' placeholder='Setor' onChange={(e) => handleChange(e)} error_form={error} value={employee?.sector} disabled={page == 'create' ? false : employee?.sector ? true : false} className={`${employee?.sector ? 'sector' : ''}`} /> */}
-            <Input type='number' title='Salário' example='2000 R$' name='salary' placeholder='Salário' onChange={(e) => handleChange(e)} error_form={error} value={employee?.salary} className={`${employee?.salary ? 'salary' : ''}`} />
+            <Input type='number' title='Salário' example='2000 R$' name='salary' placeholder='Salário' onChange={(e) => handleChange(e)} error_form={error} value={employee?.salary} className={`${employee?.salary ? 'salary' : ''}`} min={1} />
         </div>
     )
 }

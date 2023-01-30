@@ -39,11 +39,6 @@ function Create() {
 
     let domContainer = document.getElementById('container') as HTMLElement
 
-
-    async function onGeneratePDF() {
-        await execGenerate(employee)
-    }
-
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
     const [currentStep, setCurrentStep] = useState(1)
@@ -212,15 +207,15 @@ function Create() {
                             <button
                                 className={`${styles.buttonRegister} ${currentStep == 2 ? styles.nextOn : ''}`}
                                 type='submit'
+                                disabled={loading ? true : false}
                             >
-                                Cadastrar
+                                {loading ? 'Carregando' : 'Cadastrar'}
                             </button>
                         </div>
                         {message && (
                             <p>{message}</p>
                         )}
                     </form>
-                    {/* <button type='button' onClick={onGeneratePDF}>test</button> */}
                 </div>
                 <div id='container'></div>
             </div>

@@ -6,7 +6,7 @@ import { EmployeeApi } from '../types/EmployeeApi'
 
 export const useFetchDocument = (docCollection: string, id: string) => {
     
-    const [employee, setEmployee] = useState<EmployeeApi>({
+    const [document, setDocument] = useState<EmployeeApi>({
         address: '',
         admissionDate: '',
         birthDate: '',
@@ -35,9 +35,8 @@ export const useFetchDocument = (docCollection: string, id: string) => {
             const docRef = await doc(db, docCollection, id)
 
             const docSnap = await getDoc(docRef)
-            console.log(docSnap.data())
             // @ts-ignore
-            setEmployee(docSnap.data())
+            setDocument(docSnap.data())
             setLoading(false)
         } catch (error) {
             console.log(error)
@@ -55,5 +54,5 @@ export const useFetchDocument = (docCollection: string, id: string) => {
         return () => setCancelled(true)
     }, [])
  
-    return { employee, loading, error }
+    return { document, loading, error }
 }
